@@ -416,6 +416,85 @@
       </div>
     </section>
 
+
+        <!-- ===== CONTATO ===== -->
+    <section class="secao" id="contato" aria-labelledby="contato-titulo">
+      <div class="container contato">
+
+        <div class="contato__info">
+          <h2 class="secao__titulo" id="contato-titulo">Fale com a gente</h2>
+          <p class="secao__sub">
+            Dúvidas sobre ingressos, grupos, acessibilidade ou eventos privados? Escreva e respondemos em até 2 dias úteis.
+          </p>
+
+          <ul class="contato__lista">
+            <li><strong>Endereço:</strong> Av. das Artes, 1000, Centro</li>
+            <li><strong>Bilheteria:</strong> terça a domingo, das 13h às 21h</li>
+            <li><strong>Telefone:</strong> (00) 0000-0000</li>
+            <li><strong>E-mail:</strong> contato@cortinavermelha.exemplo</li>
+          </ul>
+        </div>
+
+        <form class="form" id="form-contato" novalidate aria-labelledby="form-titulo">
+          <h3 class="form__titulo" id="form-titulo">Envie uma mensagem</h3>
+          <p class="form__nota">Campos marcados com * são obrigatórios.</p>
+
+          <div class="campo">
+            <label for="ct-nome">Nome completo *</label>
+            <input type="text" id="ct-nome" name="nome" autocomplete="name" required
+                   aria-describedby="ct-nome-erro">
+            <p class="campo__erro" id="ct-nome-erro" hidden></p>
+          </div>
+
+          <div class="campo">
+            <label for="ct-email">E-mail *</label>
+            <input type="email" id="ct-email" name="email" autocomplete="email" required
+                   aria-describedby="ct-email-erro">
+            <p class="campo__erro" id="ct-email-erro" hidden></p>
+          </div>
+
+          <div class="campo">
+            <label for="ct-assunto">Assunto *</label>
+            <select id="ct-assunto" name="assunto" required aria-describedby="ct-assunto-erro">
+              <option value="">Selecione…</option>
+              <option value="ingressos">Ingressos e reservas</option>
+              <option value="grupos">Grupos e excursões</option>
+              <option value="acessibilidade">Acessibilidade</option>
+              <option value="eventos">Eventos privados</option>
+              <option value="outro">Outro</option>
+            </select>
+            <p class="campo__erro" id="ct-assunto-erro" hidden></p>
+          </div>
+
+          <fieldset class="campo campo--grupo">
+            <legend>Como prefere receber a resposta?</legend>
+            <label class="opcao"><input type="radio" name="retorno" value="email" checked> E-mail</label>
+            <label class="opcao"><input type="radio" name="retorno" value="telefone"> Telefone</label>
+          </fieldset>
+
+          <div class="campo">
+            <label for="ct-mensagem">Mensagem *</label>
+            <textarea id="ct-mensagem" name="mensagem" rows="5" required minlength="10"
+                      aria-describedby="ct-mensagem-erro"></textarea>
+            <p class="campo__erro" id="ct-mensagem-erro" hidden></p>
+          </div>
+
+          <div class="campo">
+            <label class="opcao">
+              <input type="checkbox" id="ct-aceite" name="aceite" required aria-describedby="ct-aceite-erro">
+              <span>Concordo em receber uma resposta por este canal. *</span>
+            </label>
+            <p class="campo__erro" id="ct-aceite-erro" hidden></p>
+          </div>
+
+          <button type="submit" class="btn btn--primario">Enviar mensagem</button>
+
+          <!-- Mensagem de sucesso/erro geral (preenchida pelo JS) -->
+          <p class="form__status" id="form-status" role="status" aria-live="polite" tabindex="-1"></p>
+        </form>
+
+      </div>
+    </section>
   </main>
 
   <!-- PARTE 4 (rodapé) entra aqui -->
