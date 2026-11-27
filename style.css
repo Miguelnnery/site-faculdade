@@ -852,3 +852,412 @@ html[data-contraste="alto"] .rodape { border-top-color: #ffff00; }
   font-size: 0.9rem;
 }
 .rodape__base p { margin: 0; }
+
+/* ==========================================================
+   BLOCO 3: seção de assentos, teatro 3D, responsividade
+   ========================================================== */
+
+/* ---------- 17. TEXTOS DA SEÇÃO DE ASSENTOS ---------- */
+.assentos__espetaculo { margin-bottom: 1rem; font-size: 1.05rem; }
+
+.legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  margin: 0 0 1rem;
+  list-style: none;
+}
+.legenda li { display: flex; align-items: center; gap: 0.5rem; }
+
+.legenda__cor {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--borda);
+  border-radius: 7px;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.legenda__cor--livre    { background: var(--livre); }
+.legenda__cor--ocupado  { background: var(--ocupado); }
+.legenda__cor--ocupado::after   { content: "×"; }
+.legenda__cor--escolhido { background: var(--escolhido); color: #000; }
+.legenda__cor--escolhido::after { content: "✓"; }
+
+/* ---------- 18. CENA 3D: CONTÊINER E CÂMERA ---------- */
+.teatro {
+  /* Câmera (os estados abaixo mudam estas variáveis) */
+  --k: 0.38;                         /* escala geral, ajustada por tela */
+  --seat-x: 0px;                     /* o JS preenche com a posição da poltrona */
+  --seat-y: 0px;
+  --dur: 1.8s;
+  --ease: cubic-bezier(0.65, 0, 0.25, 1);
+
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  border: 2px solid var(--borda);
+  border-radius: var(--raio-grande);
+  background: radial-gradient(ellipse at 50% 0%, #2c0d14, #0d0609 75%);
+  color: #f6ece4;                    /* o teatro é escuro nos dois temas */
+}
+
+/* Estado 1: vista do palco para a plateia, de cima */
+.teatro[data-estado="mapa"] {
+  --alvo-x: 0px;
+  --alvo-y: -35px;
+  --cam-y: 0px;
+  --cam-z: 0px;
+  --cam-tilt: 50deg;
+  --cam-giro: 180deg;
+  --cortina-rot: 0deg;
+  --cortina-esc: 0;
+  --dur: 1.8s;
+}
+
+/* Estado 2: a câmera se aproxima da poltrona escolhida */
+.teatro[data-estado="aproximando"] {
+  --alvo-x: var(--seat-x);
+  --alvo-y: var(--seat-y);
+  --cam-y: 0px;
+  --cam-z: 900px;
+  --cam-tilt: 50deg;
+  --cam-giro: 180deg;
+  --cortina-rot: 0deg;
+  --cortina-esc: 0;
+  --dur: 1.5s;
+}
+
+/* Estado 3: a câmera gira 180° e passa a olhar o palco, na altura da poltrona */
+.teatro[data-estado="vista"] {
+  --alvo-x: var(--seat-x);
+  --alvo-y: var(--seat-y);
+  --cam-y: 60px;
+  --cam-z: 780px;
+  --cam-tilt: 82deg;
+  --cam-giro: 0deg;
+  --cortina-rot: 90deg;
+  --cortina-esc: 1;
+  --dur: 2.4s;
+}
+
+.teatro__cena {
+  position: relative;
+  height: clamp(400px, 60vw, 620px);
+  perspective: 1400px;
+  overflow: hidden;
+}
+
+.teatro__mundo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transform:
+    scale(var(--k))
+    translateY(var(--cam-y))
+    translateZ(var(--cam-z))
+    rotateX(var(--cam-tilt))
+    rotateZ(var(--cam-giro))
+    translate3d(calc(var(--alvo-x) * -1), calc(var(--alvo-y) * -1), 0);
+  transition: transform var(--dur) var(--ease);
+}
+
+/* Chão do teatro (tapete) */
+.teatro__mundo::before {
+  content: "";
+  position: absolute;
+  left: -400px;
+  top: -400px;
+  width: 800px;
+  height: 800px;
+  border-radius: 40px;
+  background:
+    radial-gradient(circle at 50% 35%, #4a1520, #1a0a0e 70%);
+  box-shadow: 0 0 0 2px rgba(242, 177, 52, 0.25);
+}
+
+/* ---------- 19. PALCO ---------- */
+.palco {
+  position: absolute;
+  left: -320px;
+  top: -340px;
+  width: 640px;
+  height: 170px;
+  transform-style: preserve-3d;
+  transform: translateZ(1px);
+}
+
+.palco__piso {
+  position: absolute;
+  inset: 0;
+  border: 3px solid #6b4423;
+  border-radius: 12px 12px 4px 4px;
+  background:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.18) 0 2px, transparent 2px 22px),
+    linear-gradient(180deg, #8a5a2b, #5a3a1f);
+  box-shadow: 0 0 60px rgba(242, 177, 52, 0.35);
+}
+.palco__piso::after {            /* holofote */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 40%, rgba(255, 236, 170, 0.6), transparent 65%);
+  animation: luz-palco 4s ease-in-out infinite alternate;
+}
+
+.palco__rotulo {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--fonte-titulo);
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 0.45em;
+  color: rgba(255, 255, 255, 0.85);
+  /* contra-gira para o texto ficar sempre em pé */
+  transform: rotateZ(calc(var(--cam-giro) * -1));
+  transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
+}
+.teatro[data-estado="vista"] .palco__rotulo { opacity: 0; }
+
+/* Fundo de cena (parede no fundo do palco): deitado no mapa, em pé na vista */
+.palco::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 130px;
+  border-radius: 6px 6px 0 0;
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(255, 220, 140, 0.7), transparent 60%),
+    linear-gradient(to top, #e8731a, #8b2e5a 55%, #1d2b64);
+  transform-origin: 50% 0;
+  transform: rotateX(var(--cortina-rot)) scaleY(var(--cortina-esc));
+  transition: transform var(--dur) var(--ease);
+}
+
+/* Cortinas laterais */
+.palco__cortina {
+  position: absolute;
+  top: 6px;
+  width: 24%;
+  height: 130px;
+  background: repeating-linear-gradient(
+    90deg, #8b0a14 0 14px, #b10f1c 14px 28px, #6d0810 28px 42px
+  );
+  transform-origin: 50% 0;
+  transform: rotateX(var(--cortina-rot)) scaleY(var(--cortina-esc));
+  transition: transform var(--dur) var(--ease);
+}
+.palco__cortina--esq { left: 0;  border-radius: 0 0 40px 0; }
+.palco__cortina--dir { right: 0; border-radius: 0 0 0 40px; }
+
+html[data-contraste="alto"] .palco__cortina { background: #fff; }
+html[data-contraste="alto"] .palco__piso { border-color: #fff; }
+
+@keyframes luz-palco {
+  from { opacity: 0.55; }
+  to   { opacity: 1; }
+}
+
+/* ---------- 20. PLATEIA E POLTRONAS ---------- */
+.plateia {
+  position: absolute;
+  left: -320px;
+  top: -130px;
+  width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-inline: 36px;
+  transform: translateZ(2px);
+}
+
+.plateia__fila {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.plateia__rotulo {
+  position: absolute;
+  left: -30px;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 30px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+  transform: rotateZ(calc(var(--cam-giro) * -1));
+  transition: transform var(--dur) var(--ease);
+}
+
+/* Poltrona (botão criado pelo JS) */
+.assento {
+  --setor-cor: #e5383b;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-top: 5px solid var(--setor-cor);
+  border-radius: 9px 9px 5px 5px;
+  background: var(--livre);
+  box-shadow: inset 0 -7px 0 rgba(0, 0, 0, 0.28), 0 3px 0 rgba(0, 0, 0, 0.45);
+  color: #fff;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform 0.2s ease, background-color 0.3s ease, opacity 0.6s ease;
+}
+.assento[data-setor="premium"]  { --setor-cor: #f2b134; }
+.assento[data-setor="central"]  { --setor-cor: #e5383b; }
+.assento[data-setor="superior"] { --setor-cor: #9ad0ff; }
+
+.assento::after {                /* símbolo (×, ✓) para não depender só de cor */
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1;
+  transform: rotateZ(calc(var(--cam-giro) * -1));
+  transition: transform var(--dur) var(--ease);
+}
+
+.assento:not(.is-ocupado):hover { transform: scale(1.2); }
+
+.assento.is-ocupado {
+  background: var(--ocupado);
+  cursor: not-allowed;
+}
+.assento.is-ocupado::after { content: "×"; }
+
+.assento.is-escolhido,
+.assento[aria-pressed="true"] {
+  background: var(--escolhido);
+  color: #000;
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+  animation: pulsar 1.6s ease-in-out infinite;
+}
+.assento.is-escolhido::after,
+.assento[aria-pressed="true"]::after { content: "✓"; }
+
+.teatro :focus-visible { outline-color: #ffd166; }
+.assento:focus-visible { outline: 3px solid #ffd166; outline-offset: 3px; z-index: 2; }
+
+html[data-contraste="alto"] .assento { border-top-color: #fff !important; }
+
+/* Enquanto a câmera se mexe, não dá para clicar em outra poltrona */
+.teatro:not([data-estado="mapa"]) .assento { pointer-events: none; }
+.teatro[data-estado="vista"] .assento:not(.is-escolhido):not([aria-pressed="true"]) { opacity: 0.25; }
+
+@keyframes pulsar {
+  0%, 100% { box-shadow: inset 0 -7px 0 rgba(0, 0, 0, 0.28), 0 0 0 0 rgba(242, 177, 52, 0.8); }
+  50%      { box-shadow: inset 0 -7px 0 rgba(0, 0, 0, 0.28), 0 0 0 12px rgba(242, 177, 52, 0); }
+}
+
+/* ---------- 21. DICA E BOTÃO VOLTAR ---------- */
+.teatro__dica {
+  position: absolute;
+  inset: auto 0 0 0;
+  margin: 0;
+  padding: 2rem 1rem 0.9rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+  text-align: center;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.teatro__voltar {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 5;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  border-color: #f2b134;
+}
+.teatro__voltar[hidden] { display: none; }
+.teatro__voltar:hover { background: #f2b134; color: #000; }
+
+/* ---------- 22. RESUMO DO ASSENTO E ALTERNATIVA ---------- */
+.assentos__painel {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.resumo,
+.alternativa {
+  padding: 1.5rem;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-grande);
+}
+.resumo__titulo,
+.alternativa__titulo { font-size: 1.3rem; }
+
+.resumo__lista { display: grid; gap: 0.6rem; margin: 0 0 1.25rem; }
+.resumo__lista > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed var(--borda);
+}
+.resumo__lista dt { color: var(--texto-suave); }
+.resumo__lista dd { margin: 0; font-weight: 700; text-align: right; }
+
+.alternativa__campos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* ---------- 23. RESPONSIVIDADE ---------- */
+@media (min-width: 600px) {
+  .teatro { --k: 0.7; }
+}
+
+@media (min-width: 800px) {
+  .assentos__painel { grid-template-columns: 1.1fr 1fr; align-items: start; }
+}
+
+@media (min-width: 1000px) {
+  .teatro { --k: 1; }
+}
+
+@media (max-width: 600px) {
+  .secao { padding: 3.5rem 0; }
+  .logo__texto { font-size: 1.05rem; }
+  .abas__aba { flex: 1 1 auto; padding-inline: 0.75rem; }
+  .carrossel__legenda { padding: 2rem 1rem 1rem; }
+  .carrossel__slide img { min-height: 200px; }
+  .form, .resumo, .alternativa { padding: 1.25rem; }
+  .rodape__base { flex-direction: column; text-align: center; }
+  .teatro__voltar { top: 0.5rem; left: 0.5rem; }
+  .teatro__dica { font-size: 0.9rem; }
+}
+
+/* ---------- 24. REDUÇÃO DE MOVIMENTO (preferência do sistema) ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
