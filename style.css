@@ -1261,3 +1261,13 @@ html[data-contraste="alto"] .assento { border-top-color: #fff !important; }
     scroll-behavior: auto !important;
   }
 }
+
+/* Comente estas linhas temporariamente para testar:
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+*/
