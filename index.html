@@ -1,10 +1,97 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <title>Projeto Final-DI</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cortina Vermelha | Ingressos de Teatro</title>
+  <meta name="description" content="Escolha seu espetáculo, veja o palco da sua poltrona e compre seu ingresso no Teatro Cortina Vermelha.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Teste</h1>
+
+  <!-- Link para teclado/leitores de tela -->
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo principal</a>
+
+  <!-- ========== CABEÇALHO ========== -->
+  <header class="topo" id="inicio">
+    <a class="logo" href="#inicio" aria-label="Cortina Vermelha, página inicial">
+      <span class="logo__icone" aria-hidden="true">🎭</span>
+      <span class="logo__texto">Cortina Vermelha</span>
+    </a>
+
+    <nav class="menu" aria-label="Navegação principal">
+      <button class="menu__toggle" id="menu-toggle"
+              aria-expanded="false" aria-controls="menu-lista">
+        <span class="menu__toggle-icone" aria-hidden="true">☰</span>
+        <span>Menu</span>
+      </button>
+
+      <ul class="menu__lista" id="menu-lista">
+        <li><a href="#espetaculos">Espetáculos</a></li>
+        <li><a href="#assentos">Escolha seu assento</a></li>
+        <li><a href="#como-funciona">Como funciona</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+
+    <div class="topo__acoes">
+      <button class="btn-icone" id="btn-tema" type="button" aria-pressed="false">
+        <span aria-hidden="true" id="btn-tema-icone">☀️</span>
+        <span class="visualmente-oculto" id="btn-tema-texto">Alternar para modo claro</span>
+      </button>
+
+      <button class="btn-icone" id="btn-acessibilidade" type="button"
+              aria-expanded="false" aria-controls="painel-acessibilidade">
+        <span aria-hidden="true">♿</span>
+        <span class="visualmente-oculto">Abrir opções de acessibilidade</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ========== PAINEL DE ACESSIBILIDADE ========== -->
+  <aside class="a11y" id="painel-acessibilidade" aria-labelledby="a11y-titulo" hidden>
+    <h2 class="a11y__titulo" id="a11y-titulo">Acessibilidade</h2>
+
+    <div class="a11y__grupo" role="group" aria-labelledby="a11y-fonte">
+      <p id="a11y-fonte" class="a11y__rotulo">Tamanho do texto</p>
+      <div class="a11y__botoes">
+        <button type="button" id="fonte-menos" aria-label="Diminuir texto">A−</button>
+        <button type="button" id="fonte-reset" aria-label="Tamanho padrão do texto">A</button>
+        <button type="button" id="fonte-mais" aria-label="Aumentar texto">A+</button>
+      </div>
+    </div>
+
+    <label class="a11y__opcao">
+      <input type="checkbox" id="opt-contraste">
+      <span>Alto contraste</span>
+    </label>
+
+    <label class="a11y__opcao">
+      <input type="checkbox" id="opt-animacoes">
+      <span>Remover animações</span>
+    </label>
+
+    <button type="button" class="a11y__restaurar" id="a11y-restaurar">Restaurar padrões</button>
+  </aside>
+
+  <!-- ========== CONTEÚDO PRINCIPAL ========== -->
+  <main id="conteudo" tabindex="-1">
+
+    <!-- PARTE 2: hero, abas de pesquisa, cards e carrossel -->
+
+    <!-- PARTE 3: mapa de assentos, visão do assento e cartões explicativos -->
+
+    <!-- PARTE 4 (contato) entra aqui -->
+
+  </main>
+
+  <!-- PARTE 4 (rodapé) entra aqui -->
+
+  <script src="script.js" defer></script>
 </body>
 </html>
