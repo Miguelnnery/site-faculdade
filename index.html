@@ -277,6 +277,145 @@
       </div>
     </section>
 
+        <!-- ===== ESCOLHA DE ASSENTO ===== -->
+    <section class="secao secao--teatro" id="assentos" aria-labelledby="assentos-titulo">
+      <div class="container">
+        <h2 class="secao__titulo" id="assentos-titulo">Escolha seu assento</h2>
+        <p class="secao__sub">
+          Clique em uma poltrona para se aproximar dela e ver o palco do ponto de vista de quem vai sentar ali.
+        </p>
+
+        <!-- Espetáculo escolhido (preenchido pelo JS ao clicar em um card) -->
+        <p class="assentos__espetaculo">
+          Espetáculo: <strong id="assento-espetaculo">Nenhum selecionado (clique em um card acima)</strong>
+        </p>
+
+        <!-- Legenda -->
+        <ul class="legenda" aria-label="Legenda do mapa">
+          <li><span class="legenda__cor legenda__cor--livre" aria-hidden="true"></span> Disponível</li>
+          <li><span class="legenda__cor legenda__cor--ocupado" aria-hidden="true"></span> Ocupado</li>
+          <li><span class="legenda__cor legenda__cor--escolhido" aria-hidden="true"></span> Selecionado</li>
+        </ul>
+
+        <!-- Cena 3D do teatro -->
+        <div class="teatro" id="teatro" data-estado="mapa">
+          <div class="teatro__cena" id="teatro-cena">
+            <div class="teatro__mundo" id="teatro-mundo">
+
+              <!-- Palco -->
+              <div class="palco" aria-hidden="true">
+                <div class="palco__cortina palco__cortina--esq"></div>
+                <div class="palco__cortina palco__cortina--dir"></div>
+                <div class="palco__piso"></div>
+                <span class="palco__rotulo">PALCO</span>
+              </div>
+
+              <!-- Plateia: as poltronas são criadas pelo JavaScript -->
+              <div class="plateia" id="mapa-assentos" role="group" aria-label="Mapa de assentos da plateia"></div>
+
+            </div>
+          </div>
+
+          <!-- Dica sobre o estado atual da cena -->
+          <p class="teatro__dica" id="teatro-dica">Vista da plateia. Escolha uma poltrona.</p>
+
+          <!-- Botão para sair da visão do assento -->
+          <button type="button" class="btn btn--secundario teatro__voltar" id="btn-voltar-mapa" hidden>
+            ← Voltar ao mapa
+          </button>
+        </div>
+
+        <!-- Aviso para leitores de tela (atualizado pelo JS) -->
+        <p class="visualmente-oculto" id="assento-aviso" role="status" aria-live="polite"></p>
+
+        <div class="assentos__painel">
+
+          <!-- Resumo do assento -->
+          <div class="resumo" id="resumo-assento" aria-live="polite">
+            <h3 class="resumo__titulo">Seu assento</h3>
+            <dl class="resumo__lista">
+              <div><dt>Assento</dt><dd id="res-assento">Nenhum selecionado</dd></div>
+              <div><dt>Setor</dt><dd id="res-setor">—</dd></div>
+              <div><dt>Valor</dt><dd id="res-valor">—</dd></div>
+            </dl>
+            <button type="button" class="btn btn--primario" id="btn-reservar" disabled>
+              Reservar este assento
+            </button>
+          </div>
+
+          <!-- Alternativa sem o mapa -->
+          <form class="alternativa" id="form-alternativa" novalidate>
+            <h3 class="alternativa__titulo">Prefere escolher sem o mapa?</h3>
+            <div class="alternativa__campos">
+              <div>
+                <label for="alt-fila">Fila</label>
+                <select id="alt-fila"></select>
+              </div>
+              <div>
+                <label for="alt-poltrona">Poltrona</label>
+                <select id="alt-poltrona"></select>
+              </div>
+            </div>
+            <button type="submit" class="btn btn--secundario">Selecionar</button>
+          </form>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== COMO FUNCIONA (cartões explicativos) ===== -->
+    <section class="secao secao--alt" id="como-funciona" aria-labelledby="como-titulo">
+      <div class="container">
+        <h2 class="secao__titulo" id="como-titulo">Como funciona</h2>
+        <p class="secao__sub">Em quatro passos você garante o seu lugar.</p>
+
+        <ol class="passos">
+          <li class="passo">
+            <span class="passo__numero" aria-hidden="true">1</span>
+            <h3 class="passo__titulo">Escolha o espetáculo</h3>
+            <p>Pesquise por nome, gênero ou horário e clique em "Escolher assento".</p>
+          </li>
+          <li class="passo">
+            <span class="passo__numero" aria-hidden="true">2</span>
+            <h3 class="passo__titulo">Clique na poltrona</h3>
+            <p>O mapa mostra a plateia inteira. Toque em qualquer lugar disponível.</p>
+          </li>
+          <li class="passo">
+            <span class="passo__numero" aria-hidden="true">3</span>
+            <h3 class="passo__titulo">Veja a sua vista</h3>
+            <p>A câmera se aproxima e vira para o palco, mostrando o que você verá de lá.</p>
+          </li>
+          <li class="passo">
+            <span class="passo__numero" aria-hidden="true">4</span>
+            <h3 class="passo__titulo">Reserve</h3>
+            <p>Gostou da vista? Confirme a reserva. Se não, volte ao mapa e teste outra.</p>
+          </li>
+        </ol>
+
+        <h3 class="secao__subtitulo">Setores e valores</h3>
+        <div class="setores">
+          <article class="setor setor--ouro">
+            <h4 class="setor__nome">Plateia Premium</h4>
+            <p class="setor__detalhe">Filas A a C</p>
+            <p>Mais perto do palco, com visão privilegiada dos atores.</p>
+            <p class="setor__preco">+ R$ 40</p>
+          </article>
+          <article class="setor setor--vermelho">
+            <h4 class="setor__nome">Plateia Central</h4>
+            <p class="setor__detalhe">Filas D a G</p>
+            <p>O melhor equilíbrio entre visão completa do palco e som.</p>
+            <p class="setor__preco">Valor base</p>
+          </article>
+          <article class="setor setor--azul">
+            <h4 class="setor__nome">Plateia Superior</h4>
+            <p class="setor__detalhe">Filas H a J</p>
+            <p>Ideal para ver o conjunto da cena, com preço mais acessível.</p>
+            <p class="setor__preco">− R$ 15</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- PARTE 4 (rodapé) entra aqui -->
