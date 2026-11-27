@@ -82,11 +82,200 @@
   <!-- ========== CONTEÚDO PRINCIPAL ========== -->
   <main id="conteudo" tabindex="-1">
 
-    <!-- PARTE 2: hero, abas de pesquisa, cards e carrossel -->
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="hero" aria-labelledby="hero-titulo">
+      <div class="hero__cortina hero__cortina--esq" aria-hidden="true"></div>
+      <div class="hero__cortina hero__cortina--dir" aria-hidden="true"></div>
 
-    <!-- PARTE 3: mapa de assentos, visão do assento e cartões explicativos -->
+      <div class="hero__conteudo">
+        <p class="hero__selo">Temporada 2026</p>
+        <h1 class="hero__titulo" id="hero-titulo">Sua poltrona, sua vista, seu espetáculo</h1>
+        <p class="hero__texto">
+          Escolha o assento e veja o palco exatamente como você o verá na noite da apresentação.
+        </p>
+        <div class="hero__botoes">
+          <a class="btn btn--primario" href="#assentos">Escolher meu assento</a>
+          <a class="btn btn--secundario" href="#espetaculos">Ver espetáculos</a>
+        </div>
+      </div>
+    </section>
 
-    <!-- PARTE 4 (contato) entra aqui -->
+    <!-- ===== ESPETÁCULOS (abas + cards) ===== -->
+    <section class="secao" id="espetaculos" aria-labelledby="espetaculos-titulo">
+      <div class="container">
+        <h2 class="secao__titulo" id="espetaculos-titulo">Espetáculos em cartaz</h2>
+        <p class="secao__sub">Pesquise do jeito que for mais fácil para você.</p>
+
+        <!-- Abas de pesquisa -->
+        <div class="abas" data-abas>
+          <div class="abas__lista" role="tablist" aria-label="Formas de pesquisa">
+            <button class="abas__aba" role="tab" id="aba-nome" type="button"
+                    aria-selected="true" aria-controls="painel-nome">Por nome</button>
+            <button class="abas__aba" role="tab" id="aba-genero" type="button"
+                    aria-selected="false" aria-controls="painel-genero" tabindex="-1">Por gênero</button>
+            <button class="abas__aba" role="tab" id="aba-turno" type="button"
+                    aria-selected="false" aria-controls="painel-turno" tabindex="-1">Por horário</button>
+          </div>
+
+          <div class="abas__painel" role="tabpanel" id="painel-nome" aria-labelledby="aba-nome">
+            <label for="busca-nome">Digite o nome do espetáculo</label>
+            <input type="search" id="busca-nome" placeholder="Ex.: Noites de Veludo" autocomplete="off">
+          </div>
+
+          <div class="abas__painel" role="tabpanel" id="painel-genero" aria-labelledby="aba-genero" hidden>
+            <label for="busca-genero">Escolha um gênero</label>
+            <select id="busca-genero">
+              <option value="">Todos os gêneros</option>
+              <option value="drama">Drama</option>
+              <option value="musical">Musical</option>
+              <option value="comedia">Comédia</option>
+              <option value="infantil">Infantil</option>
+            </select>
+          </div>
+
+          <div class="abas__painel" role="tabpanel" id="painel-turno" aria-labelledby="aba-turno" hidden>
+            <label for="busca-turno">Escolha um horário</label>
+            <select id="busca-turno">
+              <option value="">Qualquer horário</option>
+              <option value="tarde">Tarde</option>
+              <option value="noite">Noite</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Aviso para leitores de tela sobre o resultado da busca -->
+        <p class="busca__status" id="busca-status" role="status" aria-live="polite">
+          Mostrando todos os 6 espetáculos.
+        </p>
+
+        <!-- Cards -->
+        <div class="cards" id="lista-espetaculos">
+
+          <article class="card" data-titulo="A Última Cortina" data-genero="drama" data-turno="noite">
+            <img class="card__img" src="https://picsum.photos/seed/teatro1/600/400" width="600" height="400" loading="lazy"
+                 alt="Palco com cortinas vermelhas entreabertas e um único foco de luz">
+            <div class="card__corpo">
+              <span class="card__tag">Drama</span>
+              <h3 class="card__titulo">A Última Cortina</h3>
+              <p class="card__texto">Um ator veterano revive sua carreira na última noite antes da aposentadoria.</p>
+              <p class="card__meta">Sex e Sáb • 20h • <strong>R$ 80</strong></p>
+              <a class="btn btn--primario btn--pequeno" href="#assentos" data-espetaculo="A Última Cortina">Escolher assento</a>
+            </div>
+          </article>
+
+          <article class="card" data-titulo="Noites de Veludo" data-genero="musical" data-turno="noite">
+            <img class="card__img" src="https://picsum.photos/seed/teatro2/600/400" width="600" height="400" loading="lazy"
+                 alt="Plateia de um teatro com poltronas de veludo vermelho">
+            <div class="card__corpo">
+              <span class="card__tag">Musical</span>
+              <h3 class="card__titulo">Noites de Veludo</h3>
+              <p class="card__texto">Canções originais e coreografias em um cabaré dos anos 1950.</p>
+              <p class="card__meta">Qui a Dom • 21h • <strong>R$ 120</strong></p>
+              <a class="btn btn--primario btn--pequeno" href="#assentos" data-espetaculo="Noites de Veludo">Escolher assento</a>
+            </div>
+          </article>
+
+          <article class="card" data-titulo="O Riso do Palhaço Azul" data-genero="comedia" data-turno="tarde">
+            <img class="card__img" src="https://picsum.photos/seed/teatro3/600/400" width="600" height="400" loading="lazy"
+                 alt="Palco iluminado em tons de azul com um cenário colorido">
+            <div class="card__corpo">
+              <span class="card__tag">Comédia</span>
+              <h3 class="card__titulo">O Riso do Palhaço Azul</h3>
+              <p class="card__texto">Um palhaço desastrado tenta organizar o próprio espetáculo de despedida.</p>
+              <p class="card__meta">Sáb e Dom • 16h • <strong>R$ 60</strong></p>
+              <a class="btn btn--primario btn--pequeno" href="#assentos" data-espetaculo="O Riso do Palhaço Azul">Escolher assento</a>
+            </div>
+          </article>
+
+          <article class="card" data-titulo="Sombras de Vermelho" data-genero="drama" data-turno="noite">
+            <img class="card__img" src="https://picsum.photos/seed/teatro4/600/400" width="600" height="400" loading="lazy"
+                 alt="Silhuetas de atores contra um fundo vermelho intenso">
+            <div class="card__corpo">
+              <span class="card__tag">Drama</span>
+              <h3 class="card__titulo">Sombras de Vermelho</h3>
+              <p class="card__texto">Um mistério familiar se desenrola em uma única noite de tempestade.</p>
+              <p class="card__meta">Qua e Qui • 20h30 • <strong>R$ 90</strong></p>
+              <a class="btn btn--primario btn--pequeno" href="#assentos" data-espetaculo="Sombras de Vermelho">Escolher assento</a>
+            </div>
+          </article>
+
+          <article class="card" data-titulo="Serenata no Telhado" data-genero="musical" data-turno="tarde">
+            <img class="card__img" src="https://picsum.photos/seed/teatro5/600/400" width="600" height="400" loading="lazy"
+                 alt="Músicos tocando em um palco decorado com luzes douradas">
+            <div class="card__corpo">
+              <span class="card__tag">Musical</span>
+              <h3 class="card__titulo">Serenata no Telhado</h3>
+              <p class="card__texto">Um musical leve sobre vizinhos que se conhecem por meio da música.</p>
+              <p class="card__meta">Dom • 17h • <strong>R$ 100</strong></p>
+              <a class="btn btn--primario btn--pequeno" href="#assentos" data-espetaculo="Serenata no Telhado">Escolher assento</a>
+            </div>
+          </article>
+
+          <article class="card" data-titulo="A Máquina dos Sonhos" data-genero="infantil" data-turno="tarde">
+            <img class="card__img" src="https://picsum.photos/seed/teatro6/600/400" width="600" height="400" loading="lazy"
+                 alt="Cenário fantasioso com engrenagens douradas e luzes alaranjadas">
+            <div class="card__corpo">
+              <span class="card__tag">Infantil</span>
+              <h3 class="card__titulo">A Máquina dos Sonhos</h3>
+              <p class="card__texto">Uma aventura interativa para crianças e famílias em um mundo de engrenagens.</p>
+              <p class="card__meta">Sáb e Dom • 15h • <strong>R$ 50</strong></p>
+              <a class="btn btn--primario btn--pequeno" href="#assentos" data-espetaculo="A Máquina dos Sonhos">Escolher assento</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CARROSSEL DE DESTAQUES ===== -->
+    <section class="secao secao--alt" id="destaques" aria-labelledby="destaques-titulo">
+      <div class="container">
+        <h2 class="secao__titulo" id="destaques-titulo">Destaques da temporada</h2>
+
+        <div class="carrossel" id="carrossel" role="region"
+             aria-roledescription="carrossel" aria-label="Destaques da temporada">
+
+          <div class="carrossel__trilho" id="carrossel-trilho" aria-live="off">
+
+            <div class="carrossel__slide" role="group" aria-roledescription="slide" aria-label="1 de 3">
+              <img src="https://picsum.photos/seed/destaque1/1000/500" width="1000" height="500" loading="lazy"
+                   alt="Grande palco com cortina vermelha aberta e luzes douradas">
+              <div class="carrossel__legenda">
+                <h3>Estreia: Noites de Veludo</h3>
+                <p>O musical mais aguardado do ano chega ao palco principal.</p>
+              </div>
+            </div>
+
+            <div class="carrossel__slide" role="group" aria-roledescription="slide" aria-label="2 de 3">
+              <img src="https://picsum.photos/seed/destaque2/1000/500" width="1000" height="500" loading="lazy"
+                   alt="Sala de teatro vista do balcão, com a plateia cheia">
+              <div class="carrossel__legenda">
+                <h3>Sessões com audiodescrição</h3>
+                <p>Toda última sexta do mês, com intérprete de Libras.</p>
+              </div>
+            </div>
+
+            <div class="carrossel__slide" role="group" aria-roledescription="slide" aria-label="3 de 3">
+              <img src="https://picsum.photos/seed/destaque3/1000/500" width="1000" height="500" loading="lazy"
+                   alt="Crianças sorrindo olhando para o palco iluminado">
+              <div class="carrossel__legenda">
+                <h3>Teatro para toda a família</h3>
+                <p>Programação infantil aos sábados e domingos à tarde.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="carrossel__controles">
+            <button type="button" class="btn-icone" id="car-anterior" aria-label="Slide anterior">‹</button>
+            <button type="button" class="btn-icone" id="car-pausa" aria-pressed="false" aria-label="Pausar rotação automática">⏸</button>
+            <button type="button" class="btn-icone" id="car-proximo" aria-label="Próximo slide">›</button>
+          </div>
+
+          <div class="carrossel__pontos" id="car-pontos" role="group" aria-label="Escolher slide"></div>
+        </div>
+      </div>
+    </section>
 
   </main>
 
